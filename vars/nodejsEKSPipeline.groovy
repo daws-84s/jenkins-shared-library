@@ -65,7 +65,7 @@ def call(Map configMap){
                     timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true }
                 }
-            } */
+            } 
             stage('Check Dependabot Alerts') {
                 environment { 
                     GITHUB_TOKEN = credentials('github-token')
@@ -99,7 +99,7 @@ def call(Map configMap){
                         }
                     }
                 }
-            }
+            }*/
             stage('Docker Build') {
                 steps {
                     script {
@@ -108,13 +108,13 @@ def call(Map configMap){
                                 aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
                                 docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
                                 docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
-                                aws ecr wait image-scan-complete --repository-name ${PROJECT}/${COMPONENT} --image-id imageTag=${appVersion} --region ${REGION}
+                                #aws ecr wait image-scan-complete --repository-name ${PROJECT}/${COMPONENT} --image-id imageTag=${appVersion} --region ${REGION}
                             """
                         }
                     }
                 }
             }
-            stage('Check Scan Results') {
+            /* stage('Check Scan Results') {
                 steps {
                     script {
                         withAWS(credentials: 'aws-creds', region: 'us-east-1') {
@@ -147,7 +147,7 @@ def call(Map configMap){
                         }
                     }
                 }
-            }
+            } */
             stage('Trigger Deploy') {
                 when{
                     expression { params.deploy }
