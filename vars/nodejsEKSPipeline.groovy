@@ -6,7 +6,7 @@ def call(Map configMap){
         environment { 
             appVersion = ''
             REGION = "us-east-1"
-            ACC_ID = "315069654700"
+            ACC_ID = "160885265516"
             PROJECT = configMap.get('project')
             COMPONENT = configMap.get('component')
         }
